@@ -2,7 +2,7 @@ import { put, takeEvery, call } from 'redux-saga/effects';
 import { REQUEST_PAGE, setPage, setNotification, setLoading } from 'actions';
 import { GENERIC_MESSAGE } from 'constants.js';
 
-function* requestPage () {
+export function* requestPage () {
   const API_HOST = process.env.API_HOST;
   yield put(setLoading(true));
   try {

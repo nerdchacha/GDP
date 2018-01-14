@@ -1,14 +1,6 @@
 {
-  "plugins": [
-    "styled-components"
-  ],
   "presets": [
-    [
-      "env",
-      {
-        "modules": false
-      }
-    ],
+    ["env", {"modules": false}],
     "react",
     "stage-0"
   ],
