@@ -65,11 +65,25 @@ const calculate = (customerId, products) => {
     return seed;
   }, 0);
   return {
-    amountBeforeDiscount: totalAmountBeforeDiscount,
-    amountAfterDiscount: totalAmountAfterDiscount,
-    discount: totalAmountBeforeDiscount - totalAmountAfterDiscount,
+    amountBeforeDiscount: precisionRound(totalAmountBeforeDiscount),
+    amountAfterDiscount: precisionRound(totalAmountAfterDiscount),
+    discount: precisionRound(totalAmountBeforeDiscount - totalAmountAfterDiscount),
   };
 };
+
+
+/**
+ * Round off decimal numbers to nearest place.
+ * @name precisionRound
+ * @function
+ * @param number {number} number to be rounded
+ * @param precision {Object} decimal places to be rounded to
+ * @return {number} rounded number
+ */
+function precisionRound(number, precision = 2) {
+  var factor = Math.pow(10, precision);
+  return Math.round(number * factor) / factor;
+}
 
 module.exports = {
   calculate,
