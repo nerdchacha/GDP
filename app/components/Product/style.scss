@@ -2,56 +2,54 @@
 @import "../../assets/stylesheets/variables.scss";
 
 .box {
-  background-color: #fff;
-  box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+  background-color: $box-color;
   margin: 0 10px;
-  border: 1px solid #CCC;
+  border-radius: 5px;
   label {
     font-size: 14px;
   }
   .banner {
-    background-color: #4D4D4D;
-    padding: 40px;
+    padding: 120px 0;
     text-align: center;
-    color: #fff;
+    color: $text-color-blue;
     text-transform: uppercase;
     h2 {
       margin: 0;
+      font-size: 34px;
     }
   }
   .fa {
     width: 50px;
     height: 50px;
-    background: $primary_color;
+    background: $secondary-color;
     color: #fff;
     border-radius: 25px;
     text-align: center;
     line-height: 50px;
     font-size: 1.4rem;
-    transform: translateY(-50%);
-    float: right;
-    margin-right: 20px;
     cursor: pointer;
-    box-shadow: 0px 20px 15px -15px rgba(0,0,0,0.5);
     transition: all 200ms ease-in-out;
+    position: absolute;
+    right: 0;
+    bottom: -15px;
     &:hover {
-      transform: translateY(-45%);
+      transform: translateY(-15%);
       box-shadow: 0px 15px 10px -10px rgba(0,0,0,0.6);
     }
     &.disabled {
-      background-color: lighten($primary_color, 10%);
+      background-color: lighten($secondary-color, 1%);
       cursor: not-allowed;
     }
   }
   .customer {
-    margin-top: 30px;
     border-radius: 0;
     width: 90%;
     margin: 0 auto;
   }
-  P {
+  p {
     font-size: 18px;
-    width: 90%;
-    margin: 10px auto;
+    margin: 0;
+    text-align: center;
+    padding: 15px 0;
   }
 }

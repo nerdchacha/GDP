@@ -1,23 +1,14 @@
-@import "~font-awesome/css/font-awesome.css";
+@import url('https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css');
 @import url('https://fonts.googleapis.com/css?family=Roboto');
 
 html, body {
   margin: 0;
   padding: 0;
-  height: 100%;
 }
 
 body {
-  background: $secondary-color;  /* fallback for old browsers */
-
-  background: -webkit-linear-gradient(left, $primary_color, $secondary-color);
-  background: -o-linear-gradient(left, $primary_color, $secondary-color);
-  background: linear-gradient(to right, $primary_color, $secondary-color);  /* Chrome 10-25, Safari 5.1-6 */ /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
-  display: flex;
-  -ms-align-items: center;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
-  font-family: 'Roboto', sans-serif;
+  background: $primary-color;  /* fallback for old browsers */
+  font-family: 'Open Sans', sans-serif;
   position: relative;
+  color: $text-color;
 }

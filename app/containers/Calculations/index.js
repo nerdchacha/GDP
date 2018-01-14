@@ -8,9 +8,9 @@ function Calculations ({ calculations: { amountBeforeDiscount, amountAfterDiscou
   if (!showCalculations) { return null; }
   return (
     <Card heading="Calculations">
-      <p><label>Amount Before Calculations</label> {amountBeforeDiscount}</p>
-      <p><label>Amount After Calculations</label> {amountAfterDiscount}</p>
-      <p><label>Total Discount</label> {discount}</p>
+      <p><label>Amount Before Calculations</label> ${amountBeforeDiscount}</p>
+      <p><label>Amount After Calculations</label> ${amountAfterDiscount}</p>
+      <p><label>Total Discount</label> ${discount}</p>
     </Card>
   );
 }

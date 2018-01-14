@@ -16,9 +16,9 @@ class Product extends Component {
       <div className="box">
         <div className="banner">
           <h2>{name}</h2>
+          <p><label>cost/ad:</label> {`$${cost}`}</p>
         </div>
         <FontAwesome name="plus" className={buttonClass} onClick={this.handleAddToCart} />
-        <p><label>cost/ad:</label> {`$${cost}`}</p>
       </div>
     );
   }
