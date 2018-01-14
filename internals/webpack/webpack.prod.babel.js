@@ -8,7 +8,6 @@ module.exports = require('./webpack.base.babel')({
   entry: {
     app: [
       'bootstrap-loader',
-      'whatwg-fetch',
       path.join(process.cwd(), 'app/app.js'),
     ],
   },

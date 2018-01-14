@@ -91,8 +91,8 @@ module.exports = (options) => ({
   },
   plugins: options.plugins.concat([
     new webpack.ProvidePlugin({
-      // make fetch available
-      fetch: 'exports-loader?self.fetch!whatwg-fetch',
+      // Make fetch available
+      fetch: path.join(process.cwd(), 'node_modules', 'isomorphic-fetch')
     }),
     new ExtractTextPlugin({
       filename: options.isDebug ? '[name].css' : '[name].[chunkhash].css',
