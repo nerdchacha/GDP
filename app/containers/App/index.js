@@ -9,7 +9,7 @@ import Cart from 'containers/Cart';
 import ProductList from 'containers/ProductList';
 import Calculations from 'containers/Calculations';
 
-class App extends Component {
+class AppContainer extends Component {
   componentDidMount () {
     this.props.requestPage();
   }
@@ -27,7 +27,7 @@ class App extends Component {
   }
 }
 
-App.propTypes = {
+AppContainer.propTypes = {
   requestPage: PropTypes.func.isRequired,
 };
 
@@ -35,4 +35,4 @@ const mapDispatchToProps = (dispatch) => ({
   requestPage: () => dispatch(requestPage()),
 });
 
-export default connect(null, mapDispatchToProps)(App);
+export default connect(null, mapDispatchToProps)(AppContainer);

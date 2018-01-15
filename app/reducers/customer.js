@@ -1,10 +1,10 @@
-import { SET_CUSTOMER } from 'actions'
+import { SET_CUSTOMER } from 'actions';
 
 export default function customer (state = null, action) {
-  switch(action.type) {
+  switch (action.type) {
     case SET_CUSTOMER:
-      return action.payload
+      return action.payload;
     default:
-      return state
+      return state;
   }
-};
+}

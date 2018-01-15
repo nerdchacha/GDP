@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 
 import Card from 'components/Card';
 
-function Calculations ({ calculations: { amountBeforeDiscount, amountAfterDiscount, discount }, showCalculations }) {
+function CalculationsContainer ({ calculations: { amountBeforeDiscount, amountAfterDiscount, discount }, showCalculations }) {
   if (!showCalculations) { return null; }
   return (
     <Card heading="Calculations">
@@ -15,7 +15,7 @@ function Calculations ({ calculations: { amountBeforeDiscount, amountAfterDiscou
   );
 }
 
-Calculations.propTypes = {
+CalculationsContainer.propTypes = {
   calculations: PropTypes.shape({
     amountBeforeDiscount: PropTypes.number,
     amountAfterDiscount: PropTypes.number,
@@ -29,4 +29,4 @@ const mapStateToProps = (state) => ({
   showCalculations: state.cart.showCalculations,
 });
 
-export default connect(mapStateToProps)(Calculations);
+export default connect(mapStateToProps)(CalculationsContainer);

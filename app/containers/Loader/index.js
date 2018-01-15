@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 
 import './style.scss';
 
-class Loader extends Component {
+class LoaderContainer extends Component {
   render () {
     const { isLoading } = this.props;
     const renderSpinner = isLoading
@@ -19,7 +19,7 @@ class Loader extends Component {
   }
 }
 
-Loader.propTypes = {
+LoaderContainer.propTypes = {
   isLoading: PropTypes.bool.isRequired,
 };
 
@@ -27,4 +27,4 @@ const mapStateToProps = (state) => ({
   isLoading: state.isLoading,
 });
 
-export default connect(mapStateToProps)(Loader);
+export default connect(mapStateToProps)(LoaderContainer);

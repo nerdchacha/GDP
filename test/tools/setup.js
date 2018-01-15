@@ -1,12 +1,12 @@
-require('babel-polyfill')
+require('babel-polyfill');
 const jsdom = require('jsdom');
 const prepare = require('mocha-prepare');
 const { spawn } = require('child_process');
 const path = require('path');
 const { JSDOM } = jsdom;
-const fetch = require('isomorphic-fetch')
+const fetch = require('isomorphic-fetch');
 
-process.env.PORT = 5769
+process.env.PORT = 5769;
 process.env.API_HOST = `http://localhost:${process.env.PORT}/api`;
 let server;
 
@@ -29,24 +29,24 @@ function startServer (done) {
   server = spawn('node', [path.join(process.cwd(), 'server')], {
     env: Object.assign({ NODE_ENV: 'test', PORT: process.env.PORT }, process.env),
     silent: false,
-  })
-  server.stdout.on('data', function (data) {
-    process.stdout.write(data)
+  });
+  server.stdout.on('data', (data) => {
+    process.stdout.write(data);
     done();
-  })
-  server.stderr.on('data', function (error) {
+  });
+  server.stderr.on('data', (error) => {
     process.stderr.write(error);
     done();
-  })
+  });
 }
 
 // Kill the test server once tests end
-process.on('exit', function () {
+process.on('exit', () => {
   console.log('Shutting down test server');
-  server.kill('SIGTERM')
+  server.kill('SIGTERM');
 });
 
 // Wait for server to start before running test
-prepare(function (done) {
-  startServer(done)
-})
+prepare((done) => {
+  startServer(done);
+});

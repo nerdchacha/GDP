@@ -1,9 +1,9 @@
-import { expect } from 'chai'
-import request from 'supertest'
-const server = request(process.env.API_HOST)
+import { expect } from 'chai';
+import request from 'supertest';
+const server = request(process.env.API_HOST);
 
-describe('API /page', function () {
-  it('should respond with 200 OK', function () {
+describe('API /page', () => {
+  it('should respond with 200 OK', () => {
     server.get('/page').expect(200);
   });
 
@@ -19,8 +19,8 @@ describe('API /page', function () {
   });
 });
 
-describe('API /calculate', function () {
-  it('should respond with 200 OK', function () {
+describe('API /calculate', () => {
+  it('should respond with 200 OK', () => {
     server.get('/calculate').expect(200);
   });
 
