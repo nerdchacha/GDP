@@ -105,7 +105,7 @@ module.exports = (options) => ({
     new webpack.DefinePlugin({
       'process.env': {
         NODE_ENV: JSON.stringify(process.env.NODE_ENV),
-        API_HOST: JSON.stringify(`http://localhost:${port}/api`),
+        API_HOST: options.isDebug ? JSON.stringify(`http://localhost:${port}/api`) : JSON.stringify(`https://gdpadvert.herokuapp.com/api`),
       },
     }),
     new webpack.NamedModulesPlugin(),

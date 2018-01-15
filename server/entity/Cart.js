@@ -1,5 +1,3 @@
-const dataController = require('../data/controller');
-
 class Cart {
   constructor () {
     this.products = [];
@@ -35,9 +33,6 @@ class Cart {
     ]
     */
     this.products = Object.keys(objectMap).map((adId) => ({ adId, numberOfAds: objectMap[adId] }));
-  }
-  setCustomer (customer) {
-    this.customer = customer;
   }
   /**
    * Calculate total amount where no discount is applied
@@ -108,19 +103,16 @@ class Cart {
    * @function
    * @return {number} amountBeforeDiscount, amountAfterDiscount and discount after calculation
    */
-  calculate () {
-    return Promise.all([dataController.getAllAds(), dataController.getOffersForCustomer(this.customer)])
-    .then(([ads, offersForCustomer]) => {
-      this.ads = ads;
-      this.offersForCustomer = offersForCustomer;
-      const totalAmountBeforeDiscount = this._calculateAmountBeforeDiscount();
-      const totalAmountAfterDiscount = this._calculateAmountAfterDiscount(totalAmountBeforeDiscount);
-      return {
-        amountBeforeDiscount: this._round(totalAmountBeforeDiscount),
-        amountAfterDiscount: this._round(totalAmountAfterDiscount),
-        discount: this._round(totalAmountBeforeDiscount - totalAmountAfterDiscount),
-      };
-    });
+  calculate (ads, offersForCustomer) {
+    this.ads = ads;
+    this.offersForCustomer = offersForCustomer;
+    const totalAmountBeforeDiscount = this._calculateAmountBeforeDiscount();
+    const totalAmountAfterDiscount = this._calculateAmountAfterDiscount(totalAmountBeforeDiscount);
+    return {
+      amountBeforeDiscount: this._round(totalAmountBeforeDiscount),
+      amountAfterDiscount: this._round(totalAmountAfterDiscount),
+      discount: this._round(totalAmountBeforeDiscount - totalAmountAfterDiscount),
+    };
   }
 }
 
