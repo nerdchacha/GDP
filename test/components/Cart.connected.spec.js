@@ -8,8 +8,8 @@ describe('Cart component', function () {
     // TODO: Use mocha factories
     const store = {
       page: {
-        ads: [{id: '0', name: 'foo', cost: 5}, {id: '1', name: 'bar', cost: 15}],
-        customers: [{id: '0', name: 'Darth Vadar'}, {id: '1', name: 'Darth Maul'}],
+        ads: [{_id: '0', name: 'foo', cost: 5}, {_id: '1', name: 'bar', cost: 15}],
+        customers: [{_id: '0', name: 'Darth Vadar'}, {_id: '1', name: 'Darth Maul'}],
       },
       cart : {
         products: [{id: 'x', adId: '0'}, {id: 'y', adId: '0'}, {id: 'z', adId: '0'}]

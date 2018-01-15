@@ -9,7 +9,7 @@ import './style.scss';
 class Cart extends Component {
   createCartItem = (customerName, { adId, id }) => {
     const { ads } = this.props;
-    const ad = ads.find((type) => type.id === adId);
+    const ad = ads.find((type) => type._id === adId);
     const { name: adName, cost } = ad;
     return (
       <tr key={id}>
@@ -36,7 +36,7 @@ class Cart extends Component {
         </Card>
       );
     }
-    const { name: customerName } = customers.find((eachCustomer) => eachCustomer.id === customer);
+    const { name: customerName } = customers.find((eachCustomer) => eachCustomer._id === customer);
     const renderCartItems = cart.products.map((cartItem) => this.createCartItem(customerName, cartItem));
     return (
       <Card heading={heading} className="cart">
@@ -70,11 +70,11 @@ Cart.propTypes = {
   ads: PropTypes.arrayOf(PropTypes.shape({
     name: PropTypes.string.isRequired,
     cost: PropTypes.number.isRequired,
-    id: PropTypes.string.isRequired,
+    _id: PropTypes.string.isRequired,
   })),
   customers: PropTypes.arrayOf(PropTypes.shape({
     name: PropTypes.string.isRequired,
-    id: PropTypes.string.isRequired,
+    _id: PropTypes.string.isRequired,
   })),
 };
 

@@ -6,8 +6,8 @@ import './style.scss';
 
 class Product extends Component {
   handleAddToCart = () => {
-    const { handleAddToCart, ad: { id } } = this.props;
-    handleAddToCart(id);
+    const { handleAddToCart, ad: { _id } } = this.props;
+    handleAddToCart(_id);
   }
   render () {
     const { ad: { name, cost } = {}, customerId } = this.props;
@@ -30,7 +30,7 @@ Product.propTypes = {
   ad: PropTypes.shape({
     name: PropTypes.string.isRequired,
     cost: PropTypes.number.isRequired,
-    id: PropTypes.string.isRequired,
+    _id: PropTypes.string.isRequired,
   }),
 };
 

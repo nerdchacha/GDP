@@ -7,7 +7,7 @@ module.exports = (app, options) => {
   const isProd = process.env.NODE_ENV === 'production';
   const isTest = process.env.NODE_ENV === 'test';
 
-  if(isTest) {
+  if (isTest) {
     return app;
   }
 

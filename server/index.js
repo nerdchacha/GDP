@@ -10,6 +10,9 @@ const argv = require('./argv');
 const port = require('./config').port;
 const setup = require('./middlewares/frontendMiddleware');
 const app = express();
+const mongodb = require('./mongoConfig');
+
+mongodb.connect();
 
 app.use(bodyParser.json());
 app.use('/api', require('./api'));

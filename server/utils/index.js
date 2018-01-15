@@ -1,5 +1,25 @@
-const offersConfig = require('../dataSource/offers.json');
-const ads = require('../dataSource/ads.json');
+/**
+ * Add selective discounts only on group of products. Applicable for offers like buy 2 get 1 free.
+ * Dont apply any discount on product falling out of the group for example
+ * 33.33% discount only on 3 products and no discount on 4th product if 4 products are in cart for ad with buy 2 get 1 offer
+ * @name calculateDiscountForGroup
+ * @function
+ * @param costPerAd {number} cost per ad
+ * @param numberOfAds {number} number Of Products
+ * @param offer {Object} discountPercent and groupSize for that offer
+ * @return {number} rounded number
+ */
+function calculateDiscountForGroup (costPerAd, numberOfAds, offer) {
+  const {
+    discountPercent,
+    groupSize,
+  } = offer;
+  const numberOfAdsNotEligibleForDiscount = numberOfAds % groupSize;
+  const numberOfAdsEligibleForDiscount = numberOfAds - numberOfAdsNotEligibleForDiscount;
+  const costOfAdsEligibleForDiscount = (numberOfAdsEligibleForDiscount * costPerAd * ((100 - discountPercent) / 100));
+  const costOfAdsNotEligibleForDiscount = numberOfAdsNotEligibleForDiscount * costPerAd;
+  return costOfAdsEligibleForDiscount + costOfAdsNotEligibleForDiscount;
+}
 
 /**
  * Calculates total amount after discount for given products.
@@ -19,70 +39,56 @@ const ads = require('../dataSource/ads.json');
  * }
  * @return {Object} totalAmountBeforeDiscount, totalAmountAfterDiscount and discount amount
  */
-const calculate = (customerId, products) => {
-  const offerConfigForCustomer = offersConfig.find((offer) => offer.customerId === customerId);
-  const totalAmountBeforeDiscount = Object.keys(products).reduce((seed, adId) => {
-    const costPerAd = ads.find((ad) => ad.id === adId).cost;
+const calculate = (products, ads, offersForCustomer) => {
+  const totalAmountBeforeDiscount = Object.keys(products).reduce((accumulatedAmount, adId) => {
+    const costPerAd = ads.find((ad) => ad._id.toString() === adId).cost;
     const numberOfAdsInCart = products[adId];
-    seed += costPerAd * numberOfAdsInCart;
-    return seed;
+    accumulatedAmount += costPerAd * numberOfAdsInCart;
+    return accumulatedAmount;
   }, 0);
-  const totalAmountAfterDiscount = Object.keys(products).reduce((seed, adId) => {
-    const offerForAddType = offerConfigForCustomer.offers.find((offer) => offer.adId === adId);
+
+  const totalAmountAfterDiscount = Object.keys(products).reduce((accumulatedAmount, adId) => {
+    const costPerAd = ads.find((ad) => ad._id.toString() === adId).cost;
     const numberOfAdsInCart = products[adId];
-    const costPerAd = ads.find((ad) => ad.id === adId).cost;
-    // No offer available for add type. Calculate normal cost and return
-    if (!offerForAddType) {
-      seed += costPerAd * numberOfAdsInCart;
-      return seed;
-    }
+    const offerForCustomerForAd = offersForCustomer.find(({ ad }) => ad._id.toString() === adId) || {};
+    const { offer = {} } = offerForCustomerForAd;
     const {
       minimumProductsToAvailDiscount,
       minimumAmountToAvailDiscount,
       discountOnlyOnGroup,
       discountPercent,
-      groupSize,
-    } = offerForAddType;
+    } = offer;
     // Calculations for products that are eligible for a discount
-    if (numberOfAdsInCart >= minimumProductsToAvailDiscount || totalAmountBeforeDiscount >= minimumAmountToAvailDiscount) {
-      // Add selective discounts only on group of products. Applicable for offers like buy 2 get 1 free.
-      // Dont apply any discount on product falling out of the group for example
-      // 33.33% discount only on 3 products and no discount on 4th product if 4 products are in cart for ad with buy 2 get 1 offer
+    if ((numberOfAdsInCart >= minimumProductsToAvailDiscount) || (totalAmountBeforeDiscount >= minimumAmountToAvailDiscount)) {
       if (discountOnlyOnGroup) {
-        const numberOfAdsEligibleForDiscount = parseInt(numberOfAdsInCart / groupSize, 10) * groupSize;
-        const numberOfAdsNotEligibleForDiscount = numberOfAdsInCart - numberOfAdsEligibleForDiscount;
-        const costOfAdsEligibleForDiscount = (numberOfAdsEligibleForDiscount * costPerAd * ((100 - discountPercent) / 100));
-        const costOfAdsNotEligibleForDiscount = numberOfAdsNotEligibleForDiscount * costPerAd;
-        seed += costOfAdsEligibleForDiscount + costOfAdsNotEligibleForDiscount;
+        accumulatedAmount += calculateDiscountForGroup(costPerAd, numberOfAdsInCart, offer);
       } else {
         // Apply non group (normal) discount calculations for other products that are eligible for a discount
-        seed += (numberOfAdsInCart * costPerAd * ((100 - discountPercent) / 100));
+        accumulatedAmount += (numberOfAdsInCart * costPerAd * ((100 - discountPercent) / 100));
       }
     } else {
       // Return normal cost since products in cart are not eligible for a discount
-      seed += costPerAd * numberOfAdsInCart;
+      accumulatedAmount += costPerAd * numberOfAdsInCart;
     }
-    return seed;
+    return accumulatedAmount;
   }, 0);
   return {
-    amountBeforeDiscount: precisionRound(totalAmountBeforeDiscount),
-    amountAfterDiscount: precisionRound(totalAmountAfterDiscount),
-    discount: precisionRound(totalAmountBeforeDiscount - totalAmountAfterDiscount),
+    amountBeforeDiscount: round(totalAmountBeforeDiscount),
+    amountAfterDiscount: round(totalAmountAfterDiscount),
+    discount: round(totalAmountBeforeDiscount - totalAmountAfterDiscount),
   };
 };
 
 
 /**
- * Round off decimal numbers to nearest place.
- * @name precisionRound
+ * Round off decimal numbers to nearest 2 place.
+ * @name round
  * @function
  * @param number {number} number to be rounded
- * @param precision {Object} decimal places to be rounded to
  * @return {number} rounded number
  */
-function precisionRound(number, precision = 2) {
-  var factor = Math.pow(10, precision);
-  return Math.round(number * factor) / factor;
+function round (number) {
+  return (Math.round(number * 100) / 100);
 }
 
 module.exports = {

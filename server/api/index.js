@@ -1,24 +1,28 @@
 const router = require('express').Router();
 const cors = require('cors');
-const ads = require('../dataSource/ads.json');
-const customers = require('../dataSource/customers.json');
 const { calculate } = require('../utils');
+const dataController = require('../data/controller');
 router.use(cors());
 
 // TODO: Implement usuing GRAPHQL instead if time allows
-router.use('/page', (req, res) => {
-  res.json({
-    ads,
-    customers,
-  });
-  res.end();
+router.use('/page', (req, res, next) => {
+  dataController.getPageData()
+  .then((data) => {
+    res.json(data);
+    res.end();
+  })
+  .catch((error) => next(error));
 });
 
-router.post('/calculate', (req, res) => {
+router.post('/calculate', (req, res, next) => {
   const { customer: customerId, products } = req.body;
-  const result = calculate(customerId, products);
-  res.json(result);
-  res.end();
+  Promise.all([dataController.getAllAds(), dataController.getOffersForCustomer(customerId)])
+  .then(([ads, offersForCustomer]) => calculate(products, ads, offersForCustomer))
+  .then((result) => {
+    res.json(result);
+    res.end();
+  })
+  .catch((error) => next(error));
 });
 
 

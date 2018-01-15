@@ -39,11 +39,11 @@ class ProductList extends Component {
   handleModalClose = () => {
     this.setState({ showModal: false });
   }
-  createCustomerOptions = ({id, name}) => (
-    <option value={id} key={id}>{name}</option>
+  createCustomerOptions = ({ _id, name }) => (
+    <option value={_id} key={_id}>{name}</option>
   )
   createAdProduct = (ad) => (
-    <Col md={4} key={ad.id}>
+    <Col md={4} key={ad._id}>
       <Product ad={ad} handleAddToCart={this.handleAddToCart} customerId={this.props.customerId} />
     </Col>
   )
@@ -87,12 +87,12 @@ ProductList.propTypes = {
   isCartFilled: PropTypes.bool.isRequired,
   customers: PropTypes.arrayOf(PropTypes.shape({
     name: PropTypes.string.isRequired,
-    id: PropTypes.string.isRequired,
+    _id: PropTypes.string.isRequired,
   })),
   ads: PropTypes.arrayOf(PropTypes.shape({
     name: PropTypes.string.isRequired,
     cost: PropTypes.number.isRequired,
-    id: PropTypes.string.isRequired,
+    _id: PropTypes.string.isRequired,
   })),
 };
 

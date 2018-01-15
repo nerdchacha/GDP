@@ -3,8 +3,8 @@
   "version": "0.0.1",
   "description": "",
   "engines": {
-    "npm": ">=3",
-    "node": ">=7"
+    "npm": "4.4.1",
+    "node": "7.4.0"
   },
   "author": "Yatin Gera",
   "license": "MIT",
@@ -76,6 +76,7 @@
     "lodash": "4.17.4",
     "minimist": "1.2.0",
     "mocha": "^4.1.0",
+    "mongoose": "^4.13.9",
     "prop-types": "^15.5.10",
     "react": "15.6.1",
     "react-bootstrap": "^0.32.0",
